@@ -85,3 +85,4 @@ alert("An error occurred while fetching the coordinates!");
 }
 
 searchButton,addEventListener("click", getCityCoordinates);
+cityInput.addEventListener("keyup", e => e.key === "Enter" && getCityCoordinates());
