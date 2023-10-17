@@ -2,10 +2,10 @@ const cityInput = document.querySelector(".city-input");
 const searchButton = document.querySelector(".search-btn");
 const currentWeather = document.querySelector(".current-weather");
 const weatherCards = document.querySelector(".weather-cards");
-// delete below if it sucks
+// delete below if it doesn't work
 const separator = document.querySelector(".separator");
 const storageKey = 'weatherSearchResults';
-// delete above if it sucks
+// delete above if it doesn't work
 const createWeatherCard = (cityName, weatherItem, index) => {
 
 if (index ===0) {
@@ -34,31 +34,31 @@ return `<div class="details">
 };
 
 // delete below if it does not work
-// Function to save search result to local storage
+// Local storage
 function saveToLocalStorage(city, data) {
     let searchResults = JSON.parse(localStorage.getItem(storageKey)) || {};
     searchResults[city] = data;
     localStorage.setItem(storageKey, JSON.stringify(searchResults));
 }
 
-// Function to display search results from local storage
+// Display search results from local storage
 function displaySearchResults() {
     const searchResults = JSON.parse(localStorage.getItem(storageKey)) || {};
-    separator.innerHTML = ''; // Clear existing search results
+    separator.innerHTML = ''; 
 
     for (const city in searchResults) {
         const result = searchResults[city];
 
-        // Create a container for each result
+        
         const resultElement = document.createElement('div');
         resultElement.classList.add('search-result');
 
-        // Display city name
+        
         const cityNameElement = document.createElement('strong');
         cityNameElement.textContent = `${city}: `;
         resultElement.appendChild(cityNameElement);
 
-        // Display weather description and temperature
+        
         const weatherInfoElement = document.createElement('span');
         weatherInfoElement.textContent = `${result.weather[0].description}, ${result.main.temp}°C`;
         resultElement.appendChild(weatherInfoElement);
@@ -67,8 +67,7 @@ function displaySearchResults() {
     }
 }
 
-// Function to handle the search button click
-// Function to fetch weather data from OpenWeatherMap API
+
 async function getWeather(city) {
     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`;
 
@@ -93,30 +92,30 @@ async function searchWeather() {
     const weatherData = await getWeather(cityName);
 
     if (weatherData) {
-        // Save search result to local storage
+         
         saveToLocalStorage(cityName, weatherData);
 
-        // Display search results
+         
         displaySearchResults();
 
-        // Reset input value after search
+         
         cityInput.value = '';
     } else {
         alert('Failed to fetch weather data. Please try again.');
     }
 }
 
-// Add an event listener to the search button
+ 
 searchButton.addEventListener('click', searchWeather);
 
-// Add an event listener to the city input for Enter key
+ 
 cityInput.addEventListener('keyup', (e) => {
     if (e.key === 'Enter') {
         searchWeather();
     }
 });
 
-// Display stored search results when the page loads
+ 
 displaySearchResults();
 
 // delete above if it does not work
